@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>CPSC 424, Lab 2, Exercise 1</title>
+    <style>
+        /* Ten fragment stylu służy do wyróżnienia kanwy na stronie. */
+        body {
+            background-color: #DDDDDD;
+        }
+        canvas {
+            background-color: white;
+            display: block;
+        }
+        #canvasholder {
+            border: 2px solid black;
+            float: left;
+        }
+    </style>
+</head>
+<body onload="init()">
+
+<h2>CS 424, Lab 2, Exercise 1</h2>
+
+<noscript>
+    <!-- Ta wiadomość będzie wyświetlana na stronie, jeśli JavaScript nie będzie dostępny. -->
+    <p>JavaScript is required to use this page.</p>
+</noscript>
+
+<div id="canvasholder">
+    <canvas id="canvas" width="600" height="600">
+        <!-- Ta wiadomość będzie wyświetlana na stronie, jeśli przeglądarka nie obsługuje elementu canvas. -->
+        Canvas not supported.
+    </canvas>
+</div>
+
+<script>
+    "use strict";
+
+    var canvas;
+    var graphics;
+    var pixelSize;
+
+    function draw() {
+        graphics.clearRect(0, 0, 600, 600);
+
+        //  sześciokąt
+        graphics.beginPath();
+        drawHexagon(graphics, 300, 300, 100);
+        graphics.fillStyle = "#800080";
+        graphics.fill();
+        graphics.stroke();
+
+//oczy
+graphics.beginPath();
+graphics.fillStyle = "white";
+fillCircle(graphics, 260, 260, 8);
+fillCircle(graphics, 340, 260, 8); 
+graphics.beginPath();
+graphics.fillStyle = "black";
+fillCircle(graphics, 260, 260, 4); 
+fillCircle(graphics, 340, 260, 4); 
+graphics.beginPath();
+graphics.fillStyle = "white";
+fillCircle(graphics, 257, 258, 2); 
+fillCircle(graphics, 337, 258, 2);
+
+
+
+
+        
+        // usta
+        graphics.strokeStyle = "black";
+        graphics.lineWidth = 2;
+        graphics.beginPath();
+        graphics.moveTo(275, 320); 
+        graphics.quadraticCurveTo(300, 350, 325, 320); // Górny łuk 
+        graphics.quadraticCurveTo(300, 330, 275, 320); // Dolny łuk 
+        graphics.stroke();
+        graphics.fillStyle = "black";
+        graphics.fill();
+        
+        // Kąciki ust 
+        graphics.strokeStyle = "black";
+        graphics.lineWidth = 3;
+        graphics.beginPath();
+        graphics.arc(270, 320, 6, Math.PI * 1.80, Math.PI * 2.30, false);
+        graphics.moveTo(324, 320); 
+        graphics.arc(332, 320, 6, Math.PI * 0.70, Math.PI * 1.20, false);  
+        graphics.stroke();
+        
+        //  zęby
+        graphics.fillStyle = "white";
+        graphics.fillRect(294, 325, 6, 5); // Lewy ząb
+        graphics.fillRect(301, 325, 6, 5); // Prawy ząb
+    }
+
+    function drawHexagon(context, centerX, centerY, radius) {
+        context.moveTo(centerX + radius * Math.cos(0), centerY + radius * Math.sin(0));
+        for (var i = 1; i <= 6; i++) {
+            context.lineTo(centerX + radius * Math.cos(i * 2 * Math.PI / 6), centerY + radius * Math.sin(i * 2 * Math.PI / 6));
+        }
+        context.closePath();
+    }
+
+    function fillCircle(context, x, y, radius) {
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.fill();
+    }
+
+    function applyWindowToViewportTransformation(left, right, bottom, top, preserveAspect) {
+        // Funkcja transformacji
+    }
+
+    function addGraphicsContextExtras(graphics) {
+        // Funkcje dodatkowe dla kontekstu graficznego
+    }
+
+    function init() {
+        try {
+            canvas = document.getElementById("canvas");
+            graphics = canvas.getContext("2d");
+        } catch (e) {
+            document.getElementById("canvasholder").innerHTML =
+                "Canvas graphics is not supported.<br>" +
+                "An error occurred while initializing graphics.";
+        }
+        addGraphicsContextExtras(graphics);
+        draw();
+    }
+</script>
+
+</body>
+</html>
