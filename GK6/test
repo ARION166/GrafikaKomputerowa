@@ -1,0 +1,90 @@
+// Deklaracja zmiennych globalnych
+let objectNumber = 1; // Domyślnie wybrany jest obiekt 1
+
+// Funkcja inicjalizująca WebGL
+function initGL(canvas) {
+    // Inicjalizacja kontekstu WebGL
+    let gl = canvas.getContext("webgl");
+    if (!gl) {
+        console.error("Unable to initialize WebGL. Your browser may not support it.");
+        return null;
+    }
+    return gl;
+}
+
+// Funkcja rysująca korkociąg
+function drawCorkscrew(gl) {
+    // Implementacja rysowania korkociągu
+    // ...
+}
+
+// Funkcja rysująca piramidę
+function drawPyramid(gl) {
+    // Implementacja rysowania piramidy
+    // ...
+}
+
+// Funkcja obsługująca zdarzenie naciśnięcia klawisza
+function handleKeyPress(event) {
+    // Sprawdzenie, czy naciśnięto klawisz numeryczny 1 lub 2
+    if (event.key === '1' || event.key === '2') {
+        objectNumber = parseInt(event.key); // Ustawienie wybranego obiektu
+    } else {
+        // Obsługa ruchu obiektu (np. obracanie)
+        // ...
+    }
+}
+
+// Funkcja wyświetlająca scenę
+function display() {
+    // Czyszczenie bufora koloru i głębokości
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    // Ustawienie aktualnego koloru rysującego
+    switch (objectNumber) {
+        case 1:
+            gl.uniform4f(uColor, 0.0, 1.0, 0.0, 1.0); // Zielony dla korkociągu
+            drawCorkscrew(gl);
+            break;
+        case 2:
+            gl.uniform4f(uColor, 0.0, 0.0, 1.0, 1.0); // Niebieski dla piramidy
+            drawPyramid(gl);
+            break;
+        default:
+            console.error("Invalid object number.");
+    }
+}
+
+// Inicjalizacja WebGL po załadowaniu strony
+window.onload = function() {
+    // Uzyskanie dostępu do elementu canvas
+    let canvas = document.getElementById("canvas");
+    if (!canvas) {
+        console.error("Failed to retrieve the <canvas> element.");
+        return;
+    }
+
+    // Inicjalizacja WebGL
+    let gl = initGL(canvas);
+    if (!gl) return;
+
+    // Przykładowa implementacja funkcji drawCorkscrew i drawPyramid
+    // Funkcje te powinny rysować odpowiednie obiekty na podstawie wartości objectNumber
+    function drawCorkscrew(gl) {
+        // Implementacja rysowania korkociągu
+    }
+
+    function drawPyramid(gl) {
+        // Implementacja rysowania piramidy
+    }
+
+    // Obsługa zdarzeń klawiatury
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Wywołanie funkcji display w pętli renderowania
+    function renderLoop() {
+        display();
+        requestAnimationFrame(renderLoop);
+    }
+    renderLoop();
+};
