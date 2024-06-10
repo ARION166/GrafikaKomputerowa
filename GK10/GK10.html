@@ -42,20 +42,14 @@ function CreateLathePart(points,slices,downPointY){
     pawn.add(pawnPart);
 }
 
-
-/**
- * This function is called by the init() method to create the world. 
- */
 function createWorld() {
     
-    renderer.setClearColor("white"); // Background color for scene.
+    renderer.setClearColor("white");
     scene = new THREE.Scene();
-    
-    // ------------------- Make a camera with viewpoint light ----------------------
     
     camera = new THREE.PerspectiveCamera(30, canvas.width/canvas.height, 0.1, 100);
     camera.position.z = 30;
-    var light;  // A light shining from the direction of the camera; moves with the camera.
+    var light; 
     light = new THREE.DirectionalLight();
     light.position.set(0,0,1);
     camera.add(light);
@@ -63,12 +57,12 @@ function createWorld() {
     
     //------------------- Create the scene's visible objects ----------------------
     
-    //Base
+    //baza
     CreateCylinderPart(2, 2, 0.2, 100, -4);
     CreateCylinderPart(2.1, 2.1, 0.5, 100, -3.8);
     CreateCylinderPart(2, 2, 0.3, 100, -3.4);
 
-    //Pillar
+    //slupek
     var points = [];
     points.push(new THREE.Vector2(1.9, 0));
     points.push(new THREE.Vector2(1.2, 1.2));
@@ -77,20 +71,17 @@ function createWorld() {
     var curve = new THREE.CatmullRomCurve3(points, false, "catmullrom");
     var curvePoints = curve.getPoints(50);
     CreateLathePart(curvePoints,100,-3.1);
-
     CreateCylinderPart(1.6, 1.6, 0.7, 100, 1.4);
 
-    //Head
-    CreateCylinderPart(0.8, 0.8, 0.2, 100, 1.7);
-    
+    //glowa
+    CreateCylinderPart(0.8, 0.8, 0.2, 100, 1.7);   
     points = [];
     points.push(new THREE.Vector2(1.3, 0));
     points.push(new THREE.Vector2(1.8, 1.5));
     points.push(new THREE.Vector2(0, 3));
     var curve = new THREE.CatmullRomCurve3(points, false, "catmullrom");
     var curvePoints = curve.getPoints(50);
-    CreateLathePart(curvePoints,100,1.9);
-    
+    CreateLathePart(curvePoints,100,1.9);  
     scene.add(pawn);
 } 
 
